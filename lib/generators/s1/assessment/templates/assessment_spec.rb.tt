@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+RSpec.describe <%= class_name %>Assessment do
+  # after { S1.reset_config! }
+  #
+  # it "judges one question per item of the standard" do
+  #   S1.config.provider = S1::Providers::Stub.new { |request| request.questions.keys.to_h { |id| [id, :yes] } }
+  #   record = ...
+  #
+  #   result = described_class.call(record)
+  #
+  #   expect(result.verdicts.values).to all(eq(:yes))
+  # end
+end

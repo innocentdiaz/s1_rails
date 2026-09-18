@@ -1,0 +1,40 @@
+# frozen_string_literal: true
+
+# An s1 assessment: its questions are built from data at run time — one per item of the
+# standard — so they cannot be declared as columns. It returns a plain Result and writes
+# nothing; the caller decides what to save. See "Assessments" in the s1-rails README.
+class <%= class_name %>Assessment
+  Result = Data.define(:verdicts)
+
+  VERDICTS = {
+    "yes" => "The evidence establishes it.",
+    "no" => "The evidence establishes it is not the case.",
+    "unknown" => "The evidence does not say."
+  }.freeze
+
+  def self.call(...) = new(...).call
+
+  def initialize(record)
+    @record = record
+  end
+
+  def call
+    items = standard
+    # Positional ids: the standard's own ids are not guaranteed present or unique.
+    result = state.measure do |q|
+      items.each_with_index { |item, n| q.choose :"q#{n}", question(item), categories: VERDICTS }
+    end
+    Result.new(verdicts: items.each_with_index.to_h { |item, n| [item, result[:"q#{n}"].collapse] })
+  end
+
+  private
+
+  # The items the record is judged against — rules, criteria, checklist entries — read from data.
+  def standard = raise(NotImplementedError, "#{self.class}#standard: return the items to judge")
+
+  def question(item) = "Does this meet: #{item}?"
+
+  # The facts (a form on the record) judged against the lens (add .given(standard: …));
+  # metadata: labels every call, for the ask.s1 subscriber.
+  def state = @state ||= @record.as(metadata: { call_type: "<%= file_path %>" })
+end

@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+
+require "test_helper"
+
+class <%= class_name %>AssessmentTest < ActiveSupport::TestCase
+  # teardown { S1.reset_config! }
+  #
+  # test "judges one question per item of the standard" do
+  #   S1.config.provider = S1::Providers::Stub.new { |request| request.questions.keys.to_h { |id| [id, :yes] } }
+  #   record = ...
+  #
+  #   result = <%= class_name %>Assessment.call(record)
+  #
+  #   assert result.verdicts.values.all?(:yes)
+  # end
+end
