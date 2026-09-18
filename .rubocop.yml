@@ -1,0 +1,67 @@
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  SuggestExtensions: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
+Style/Documentation:
+  Enabled: false
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 160
+
+Metrics/AbcSize:
+  Max: 30
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/CyclomaticComplexity:
+  Max: 15
+
+Metrics/PerceivedComplexity:
+  Max: 15
+
+Metrics/ParameterLists:
+  Max: 6
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - s1-rails.gemspec
+
+# The judge DSL takes `true:` / `false:` criteria kwargs by design.
+Lint/BooleanSymbol:
+  Exclude:
+    - spec/**/*
+    - lib/s1/measurable/declarations.rb
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - spec/**/*
+
+# Delegators: `**kw` is the whole point.
+Naming/MethodParameterName:
+  AllowedNames: [kw, id, a, q, e, s, as]
+
+# Conventional gem entry shim (`require "s1-rails"`).
+Naming/FileName:
+  Exclude:
+    - lib/s1-rails.rb
+
+Metrics/ModuleLength:
+  Exclude:
+    - lib/s1/measurable.rb                 # the concern: the record verbs in one place
+    - lib/s1/measurable/declarations.rb    # the macros, the registry and the boot check
+    - lib/s1/measurable/staging.rb         # the one code path: sourcing, stages, gates, batches, merge
+
+Metrics/ClassLength:
+  Max: 150
